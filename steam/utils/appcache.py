@@ -45,12 +45,13 @@ uint32 = struct.Struct('<I')
 uint64 = struct.Struct('<Q')
 int64 = struct.Struct('<q')
 
-def parse_appinfo(fp):
+def parse_appinfo(fp, mapper=None):
     """Parse appinfo.vdf from the Steam appcache folder
 
     :param fp: file-like object
+    :param mapper: Python object class to return
     :raises: SyntaxError
-    :rtype: (:class:`dict`, :class:`Generator`)
+    :rtype: (:class:`Generator` returning :class:`dict` by default or mapper class if set)
     :return: (header, apps iterator)
     """
 # format:
@@ -133,7 +134,7 @@ def parse_appinfo(fp):
 
             # 'key_table' will be None for older 'appinfo.vdf' files which
             # use self-contained binary VDFs.
-            app['data'] = binary_load(fp, key_table=key_table)
+            app['data'] = binary_load(fp, key_table=key_table, mapper=mapper)
 
             yield app
 
@@ -145,12 +146,13 @@ def parse_appinfo(fp):
             apps_iter()
             )
 
-def parse_packageinfo(fp):
+def parse_packageinfo(fp, mapper=None):
     """Parse packageinfo.vdf from the Steam appcache folder
 
     :param fp: file-like object
+    :param mapper: Python object class to return
     :raises: SyntaxError
-    :rtype: (:class:`dict`, :class:`Generator`)
+    :rtype: (:class:`Generator` returning :class:`dict` by default or mapper class if set)
     :return: (header, packages iterator)
     """
 # format:
@@ -187,7 +189,7 @@ def parse_packageinfo(fp):
             if magic == b"(UV\x06":
                 pkg['token'] = uint64.unpack(fp.read(8))[0]
 
-            pkg['data'] = binary_load(fp)
+            pkg['data'] = binary_load(fp, mapper=mapper)
 
             yield pkg
 
