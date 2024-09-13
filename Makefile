@@ -30,7 +30,7 @@ init:
 	pip install -r dev_requirements.txt
 
 init_docs:
-	pip install sphinx==1.8.5 sphinx_rtd_theme
+	pip install sphinx==8.0.2 sphinx-rtd-theme
 
 COVOPTS = --cov-config .coveragerc --cov=steam
 
