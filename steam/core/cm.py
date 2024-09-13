@@ -204,7 +204,7 @@ class CMClient(EventEmitter):
             message.sessionID = self.session_id
 
         if self.verbose_debug:
-            self._LOG.debug("Outgoing: {}\n{}".format(repr(message), str(message)))
+            self._LOG.debug(f"Outgoing: {repr(message)}\n{str(message)}")
         else:
             self._LOG.debug("Outgoing: %s", repr(message))
 
@@ -277,7 +277,7 @@ class CMClient(EventEmitter):
             msg.parse()
 
         if self.verbose_debug:
-            self._LOG.debug("Incoming: {}\n{}".format(repr(msg), str(msg)))
+            self._LOG.debug(f"Incoming: {repr(msg)}\n{str(msg)}")
         else:
             self._LOG.debug("Incoming: %s", repr(msg))
 

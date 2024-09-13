@@ -568,7 +568,7 @@ def generate_device_id(steamid):
     :rtype: str
     """
     h = hexlify(sha1_hash(str(steamid).encode('ascii'))).decode('ascii')
-    return "android:{}-{}-{}-{}-{}".format(h[:8], h[8:12], h[12:16], h[16:20], h[20:32])
+    return f"android:{h[:8]}-{h[8:12]}-{h[12:16]}-{h[16:20]}-{h[20:32]}"
 
 def extract_secrets_from_android_rooted(adb_path='adb'):
     """Extract Steam Authenticator secrets from a rooted Android device

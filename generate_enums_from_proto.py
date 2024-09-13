@@ -83,9 +83,9 @@ print("from steam.enums.base import SteamIntEnum")
 
 for class_name, (attrs, attrs_starting_with_number) in sorted(classes.items(), key=lambda x: x[0].lower()):
         if attrs_starting_with_number:
-            print("\n{} = SteamIntEnum({!r}, {{".format(class_name, class_name))
+            print(f"\n{class_name} = SteamIntEnum({class_name!r}, {{")
             for ikey, ivalue in attrs.items():
-                print("    {!r}: {!r},".format(ikey, ivalue))
+                print(f"    {ikey!r}: {ivalue!r},")
             print("    })")
         else:
             print(f"\nclass {class_name}(SteamIntEnum):")

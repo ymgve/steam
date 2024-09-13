@@ -16,8 +16,8 @@ with open(path.join(here, 'steam/__init__.py'), encoding='utf-8') as f:
 install_requires = [
     'pycryptodomex>=3.7.0',
     'requests>=2.9.1',
-    'urllib3<2',
-    'vdf>=3.3',
+    'urllib3<2', # See https://github.com/kevin1024/vcrpy/pull/699#issuecomment-1551439663
+    'vdf @ git+https://github.com/solsticegamestudios/vdf.git@v4.0',
     'cachetools>=3.0.0',
 ]
 
@@ -38,20 +38,19 @@ setup(
     author="Rossen Georgiev / Solstice Game Studios",
     author_email='py-steam@solsticegamestudios.com',
     license='MIT',
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Natural Language :: English',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
-        'Programming Language :: Python :: 3.12',
+        #'Programming Language :: Python :: 3.12', # TODO: Needs vcrpy>=6.0.0
         'Programming Language :: Python :: Implementation :: PyPy',
     ],
     keywords='valve steam steamid api webapi steamcommunity',

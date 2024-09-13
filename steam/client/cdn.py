@@ -146,7 +146,7 @@ def get_content_servers_from_cs(cell_id, host='cs.steamcontent.com', port=80, nu
     """
     proto = 'https' if port == 443 else 'http'
 
-    url = '{}://{}:{}/serverlist/{}/{}/'.format(proto, host, port, cell_id, num_servers)
+    url = f'{proto}://{host}:{port}/serverlist/{cell_id}/{num_servers}/'
     session = make_requests_session() if session is None else session
     resp = session.get(url)
 
@@ -598,7 +598,7 @@ class CDNClient:
         :raises SteamError: error message
         """
         if (depot_id, chunk_id) not in self._chunk_cache:
-            resp = self.cdn_cmd('depot', '{}/chunk/{}'.format(depot_id, chunk_id))
+            resp = self.cdn_cmd('depot', f'{depot_id}/chunk/{chunk_id}')
 
             data = symmetric_decrypt(resp.content, self.get_depot_key(app_id, depot_id))
 
@@ -661,7 +661,7 @@ class CDNClient:
         )
 
         if resp is None or resp.header.eresult != EResult.OK:
-                raise SteamError("Failed to get manifest code for {}, {}, {}".format(app_id, depot_id, manifest_gid),
+                raise SteamError(f"Failed to get manifest code for {app_id}, {depot_id}, {manifest_gid}",
                                  EResult.Timeout if resp is None else EResult(resp.header.eresult))
 
         return resp.body.manifest_request_code
@@ -684,9 +684,9 @@ class CDNClient:
         """
         if (app_id, depot_id, manifest_gid) not in self.manifests:
             if manifest_request_code:
-                resp = self.cdn_cmd('depot', '{}/manifest/{}/5/{}'.format(depot_id, manifest_gid, manifest_request_code))
+                resp = self.cdn_cmd('depot', f'{depot_id}/manifest/{manifest_gid}/5/{manifest_request_code}')
             else:
-                resp = self.cdn_cmd('depot', '{}/manifest/{}/5'.format(depot_id, manifest_gid))
+                resp = self.cdn_cmd('depot', f'{depot_id}/manifest/{manifest_gid}/5')
 
             if resp.ok:
                 manifest = self.DepotManifestClass(self, app_id, resp.content)
@@ -757,7 +757,7 @@ class CDNClient:
         is_enc_branch = False
 
         if branch not in depots.get('branches', {}):
-            raise SteamError("No branch named {} for app_id {}".format(repr(branch), app_id))
+            raise SteamError(f"No branch named {repr(branch)} for app_id {app_id}")
         elif int(depots['branches'][branch].get('pwdrequired', 0)) > 0:
             is_enc_branch = True
 

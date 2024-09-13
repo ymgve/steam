@@ -229,7 +229,7 @@ def query_master(filter_text=r'\nappid\500', max_servers=20, region=MSRegion.Wor
                 ms.close()
                 return
 
-        next_ip = f'{ip}:{port}'.encode('utf-8')
+        next_ip = f'{ip}:{port}'.encode()
 
     ms.close()
 

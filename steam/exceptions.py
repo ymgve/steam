@@ -8,7 +8,7 @@ class SteamError(Exception):
         self.eresult = EResult(eresult)  #: :class:`.EResult`
 
     def __str__(self):
-        return "({}) {}".format(self.eresult, self.message)
+        return f"({self.eresult}) {self.message}"
 
 class ManifestError(SteamError):
     """

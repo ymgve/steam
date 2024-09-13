@@ -150,7 +150,7 @@ class Msg:
         else:
             suffix = 'n/a'
 
-        return "<Msg({!r} | {})>".format(self.msg, suffix)
+        return f"<Msg({self.msg!r} | {suffix})>"
 
     def __str__(self):
         rows = [repr(self)]
@@ -238,7 +238,7 @@ class MsgProto:
         else:
             suffix = 'n/a'
 
-        return "<MsgProto({!r} | {})>".format(self.msg, suffix)
+        return f"<MsgProto({self.msg!r} | {suffix})>"
 
     def __str__(self):
         rows = [repr(self)]
