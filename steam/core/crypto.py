@@ -24,11 +24,7 @@ gdTckPv+T1JzZsuVcNfFjrocejN1oWI0Rrtgt4Bo+hOneoo3S57G9F1fOpn5nsQ6
 
 BS = 16
 pad = lambda s: s + (BS - len(s) % BS) * pack('B', BS - len(s) % BS)
-
-if sys.version_info < (3,):
-    unpad = lambda s: s[0:-ord(s[-1])]
-else:
-    unpad = lambda s: s[0:-s[-1]]
+unpad = lambda s: s[0:-s[-1]]
 
 
 def generate_session_key(hmac_secret=b''):

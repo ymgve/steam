@@ -1,14 +1,7 @@
-
-import six
 from types import GeneratorType as _GeneratorType
 from google.protobuf.message import Message as _ProtoMessageType
 
-
-if six.PY2:
-    _list_types = list, xrange, _GeneratorType
-else:
-    _list_types = list, range, _GeneratorType, map, filter
-
+_list_types = list, range, _GeneratorType, map, filter
 protobuf_mask = 0x80000000
 
 

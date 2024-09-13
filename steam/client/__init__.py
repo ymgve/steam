@@ -20,7 +20,6 @@ from time import time
 from io import open
 from getpass import getpass
 import logging
-import six
 
 from eventemitter import EventEmitter
 from steam.enums import EResult, EOSType, EPersonaState
@@ -33,13 +32,6 @@ from steam.exceptions import SteamError
 from steam.client.builtins import BuiltinBase
 from steam.utils import ip4_from_int, ip4_to_int
 from steam.utils.proto import proto_fill_from_dict
-
-
-# TODO: remove py2 support.
-if six.PY2:
-    _cli_input = raw_input
-else:
-    _cli_input = input
 
 
 class SteamClient(CMClient, BuiltinBase):

@@ -8,11 +8,6 @@ from steam.enums import EType, EUniverse, EInstanceFlag
 from steam.core.crypto import md5_hash
 from steam.utils.web import make_requests_session
 
-if sys.version_info < (3,):
-    intBase = long
-else:
-    intBase = int
-
 class ETypeChar(SteamIntEnum):
     I = EType.Invalid
     U = EType.Individual
@@ -40,7 +35,7 @@ _icode_map_inv   = dict(zip(_icode_custom, _icode_hex   ))
 _csgofrcode_chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
 
 
-class SteamID(intBase):
+class SteamID(int):
     """
     Object for converting steamID to its' various representations
 

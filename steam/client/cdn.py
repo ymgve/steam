@@ -96,7 +96,6 @@ Reading a file directly from SteamPipe
 from zipfile import ZipFile
 from io import BytesIO
 from collections import OrderedDict, deque
-from six import itervalues, iteritems
 from binascii import crc32, unhexlify
 from datetime import datetime
 import logging
@@ -114,11 +113,8 @@ from steam.utils.web import make_requests_session
 from steam.core.crypto import symmetric_decrypt, symmetric_decrypt_ecb
 from steam.core.manifest import DepotManifest, DepotFile
 from steam.protobufs.content_manifest_pb2 import ContentManifestPayload
+import lzma
 
-try:
-    import lzma
-except ImportError:
-    from backports import lzma
 
 def decrypt_manifest_gid_2(encrypted_gid, password):
     """Decrypt manifest gid v2 bytes
@@ -164,7 +160,7 @@ def get_content_servers_from_cs(cell_id, host='cs.steamcontent.com', port=80, nu
 
     servers = []
 
-    for entry in itervalues(kv['serverlist']):
+    for entry in kv['serverlist'].values():
         server = ContentServer()
         server.type = entry['type']
         server.https = True if entry['https_support'] == 'mandatory' else False
@@ -497,9 +493,9 @@ class CDNClient(object):
                 return
 
             packages = list(map(lambda l: {'packageid': l.package_id, 'access_token': l.access_token},
-                                itervalues(self.steam.licenses)))
+                                self.steam.licenses.values()))
 
-        for package_id, info in iteritems(self.steam.get_product_info(packages=packages)['packages']):
+        for package_id, info in self.steam.get_product_info(packages=packages)['packages'].items():
             self.licensed_app_ids.update(info['appids'].values())
             self.licensed_depot_ids.update(info['depotids'].values())
 
@@ -800,7 +796,7 @@ class CDNClient(object):
         tasks = []
         shared_depots = {}
 
-        for depot_id, depot_info in iteritems(depots):
+        for depot_id, depot_info in depots.items():
             if not depot_id.isdigit():
                 continue
 
@@ -866,7 +862,7 @@ class CDNClient(object):
             manifests.append(result)
 
         # load shared depot manifests
-        for app_id, depot_ids in iteritems(shared_depots):
+        for app_id, depot_ids in shared_depots.items():
             def nested_ffunc(depot_id, depot_info, depot_ids=depot_ids, ffunc=filter_func):
                 return (int(depot_id) in depot_ids
                         and (ffunc is None or ffunc(depot_id,  depot_info)))
@@ -939,5 +935,3 @@ class CDNClient(object):
 
         manifest.name = wf.title
         return manifest
-
-

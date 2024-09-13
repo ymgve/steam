@@ -16,10 +16,6 @@ import requests
 
 from steam import webauth as wa
 
-try:
-    _input = raw_input
-except:
-    _input = input
 
 # personal info scrubbers
 # -----------------------
@@ -80,7 +76,7 @@ anon_vcr = vcr.VCR(
 
 def user_pass_only():
     print("Please enter a user that can login with just password.")
-    u = _input("Username: ")
+    u = input("Username: ")
     p = getpass("Password (no echo): ")
 
     user_pass_only_success(u, p)

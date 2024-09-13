@@ -1,5 +1,4 @@
 import logging
-from six import itervalues
 from eventemitter import EventEmitter
 from steam.steamid import SteamID, intBase
 from steam.enums import EResult, EFriendRelationship
@@ -129,7 +128,7 @@ class SteamFriendlist(EventEmitter):
         return len(self._fr)
 
     def __iter__(self):
-        return itervalues(self._fr)
+        return self._fr.values()
 
     def __list__(self):
         return list(iter(self))

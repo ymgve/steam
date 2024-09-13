@@ -1,8 +1,6 @@
 """Classes to (de)serialize various struct messages"""
 import struct
-import six
 import vdf
-from six.moves import range
 from steam.enums import EResult, EUniverse
 from steam.enums.emsg import EMsg
 from steam.utils.binary import StructReader
@@ -26,8 +24,7 @@ class StructMessageMeta(type):
 
         return cls
 
-@six.add_metaclass(StructMessageMeta)
-class StructMessage:
+class StructMessage(object, metaclass=StructMessageMeta):
     def __init__(self, data=None):
         if data: self.load(data)
 
@@ -36,7 +33,6 @@ class StructMessage:
 
     def load(self, data):
         raise NotImplementedError
-
 
 class ChannelEncryptRequest(StructMessage):
     protocolVersion = 1
@@ -426,4 +422,3 @@ class ClientPasswordChange3(StructMessage):
 
 class ClientPasswordChangeResponse(_ResultStruct):
     pass
-

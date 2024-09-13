@@ -1,13 +1,7 @@
 import sys
 from datetime import datetime, timedelta
 
-if sys.version_info < (3,):
-    intBase = long
-else:
-    intBase = int
-
-
-class GlobalID(intBase):
+class GlobalID(int):
     """
     Represents a globally unique identifier within the Steam network.
     Guaranteed to be unique across all racks and servers for a given Steam universe.

@@ -1,12 +1,6 @@
 """Utility package with various useful functions
 """
-import six
-from six.moves import xrange as _range
 import sys
-
-if six.PY2 and sys.platform == 'win32':
-    import win_inet_pton
-
 import weakref
 import struct
 import socket
@@ -63,7 +57,7 @@ def chunks(arr, size):
     :return: generator object
     :rtype: :class:`generator`
     """
-    for i in _range(0, len(arr), size):
+    for i in range(0, len(arr), size):
         yield arr[i:i+size]
 
 

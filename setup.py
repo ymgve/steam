@@ -14,21 +14,17 @@ with open(path.join(here, 'steam/__init__.py'), encoding='utf-8') as f:
     __version__ = f.readline().split('"')[1]
 
 install_requires = [
-    'six>=1.10',
     'pycryptodomex>=3.7.0',
     'requests>=2.9.1',
     'urllib3<2',
     'vdf>=3.3',
     'cachetools>=3.0.0',
-    "win-inet-pton; python_version == '2.7' and sys_platform == 'win32'",
-    "enum34==1.1.2; python_version < '3.4'",
 ]
 
 install_extras = {
     'client': [
         'gevent>=1.3.0',
-        'protobuf~=3.0; python_version >= "3"',
-        'protobuf<3.18.0; python_version < "3"',
+        'protobuf~=3.0',
         'gevent-eventemitter~=2.1',
     ],
 }
@@ -38,24 +34,24 @@ setup(
     version=__version__,
     description='Module for interacting with various Steam features',
     long_description=long_description,
-    url='https://github.com/ValvePython/steam',
-    author="Rossen Georgiev",
-    author_email='rossen@rgp.io',
+    url='https://github.com/solsticegamestudios/steam',
+    author="Rossen Georgiev / Solstice Game Studios",
+    author_email='py-steam@solsticegamestudios.com',
     license='MIT',
+    python_requires=">=3.6",
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Natural Language :: English',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: Implementation :: PyPy',
     ],
     keywords='valve steam steamid api webapi steamcommunity',
