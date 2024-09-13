@@ -12,7 +12,7 @@ from Cryptodome.Cipher import PKCS1_OAEP, PKCS1_v1_5
 from Cryptodome.Cipher import AES as AES
 
 
-class UniverseKey(object):
+class UniverseKey:
     """Public keys for Universes"""
 
     Public = rsa_import_key(b64decode("""

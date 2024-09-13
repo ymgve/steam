@@ -33,7 +33,7 @@ All globals params (``key``, ``https``, ``format``, ``raw``) can be specified on
 import json as _json
 from steam.utils.web import make_requests_session as _make_session
 
-class APIHost(object):
+class APIHost:
     """Enum of currently available API hosts."""
     Public = 'api.steampowered.com'
     """ available over HTTP (port 80) and HTTPS (port 443)"""
@@ -56,7 +56,7 @@ DEFAULT_PARAMS = {
 }
 
 
-class WebAPI(object):
+class WebAPI:
     """Steam WebAPI wrapper
 
     .. note::
@@ -106,7 +106,7 @@ class WebAPI(object):
             self.load_interfaces(self.fetch_interfaces())
 
     def __repr__(self):
-        return "%s(key=%s, https=%s)" % (
+        return "{}(key={}, https={})".format(
             self.__class__.__name__,
             repr(self.key),
             repr(self.https),
@@ -178,7 +178,7 @@ class WebAPI(object):
         return doc
 
 
-class WebAPIInterface(object):
+class WebAPIInterface:
     """
     Steam Web API Interface
     """
@@ -201,7 +201,7 @@ class WebAPIInterface(object):
                 setattr(self, obj.name, obj)
 
     def __repr__(self):
-        return "<%s %s with %s methods>" % (
+        return "<{} {} with {} methods>".format(
             self.__class__.__name__,
             repr(self.name),
             repr(len(list(self))),
@@ -247,13 +247,13 @@ class WebAPIInterface(object):
 
     @property
     def __doc__(self):
-        doc = "%s\n%s\n" % (self.name, '-'*len(self.name))
+        doc = "{}\n{}\n".format(self.name, '-'*len(self.name))
         for method in self.methods:
             doc += "  %s\n" % method.__doc__.replace("\n", "\n  ")
         return doc
 
 
-class WebAPIMethod(object):
+class WebAPIMethod:
     """
     Steam Web API Interface Method
     """
@@ -275,7 +275,7 @@ class WebAPIMethod(object):
             self._dict['parameters'][param['name']] = param
 
     def __repr__(self):
-        return "<%s %s>" % (
+        return "<{} {}>".format(
             self.__class__.__name__,
             repr("%s.%s_v%d" % (
                 self._parent.name,
@@ -310,13 +310,13 @@ class WebAPIMethod(object):
 
             if name in kwargs:
                 if islist and not isinstance(kwargs[name], list):
-                    raise ValueError("Expected %s to be a list, got %s" % (
+                    raise ValueError("Expected {} to be a list, got {}".format(
                         repr(name),
                         repr(type(kwargs[name])))
                         )
                 params[name] = kwargs[name]
 
-        url = "%s://%s/%s/%s/v%s/" % (
+        url = "{}://{}/{}/{}/v{}/".format(
             'https' if self._parent.https else 'http',
             self._parent.apihost,
             self._parent.name,
@@ -366,7 +366,7 @@ class WebAPIMethod(object):
             doc += "  \n  Parameters:\n"
 
             for param in sorted(self.parameters.values(), key=lambda x: x['name']):
-                doc += "    %s %s %s%s\n" % (
+                doc += "    {} {} {}{}\n".format(
                     param['name'].ljust(25),
                     ((param['type']+"[]") if param['_array'] else
                      param['type']
@@ -463,7 +463,7 @@ def get(interface, method, version=1,
     :return: endpoint response
     :rtype: :class:`dict`, :class:`lxml.etree.Element`, :class:`str`
     """
-    url = u"%s://%s/%s/%s/v%s/" % (
+    url = "{}://{}/{}/{}/v{}/".format(
         'https' if https else 'http', apihost, interface, method, version)
     return webapi_request(url, 'GET', caller=caller, session=session, params=params)
 
@@ -489,6 +489,6 @@ def post(interface, method, version=1,
     :return: endpoint response
     :rtype: :class:`dict`, :class:`lxml.etree.Element`, :class:`str`
     """
-    url = "%s://%s/%s/%s/v%s/" % (
+    url = "{}://{}/{}/{}/v{}/".format(
         'https' if https else 'http', apihost, interface, method, version)
     return webapi_request(url, 'POST', caller=caller, session=session, params=params)

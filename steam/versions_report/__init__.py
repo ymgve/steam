@@ -1,11 +1,10 @@
-
 import sys
 
 def versions_report():
     """Print a report of al dependacy versions, and environment"""
 
     from steam import __version__
-    print("steam: {}".format(__version__))
+    print(f"steam: {__version__}")
 
     # dependecy versions
     print("\nDependencies:")

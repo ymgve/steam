@@ -6,7 +6,7 @@ from steam.enums import EFriendRelationship, EPersonaState, EChatEntryType
 from steam.enums.emsg import EMsg
 from steam.core.msg import MsgProto
 
-class SteamUser(object):
+class SteamUser:
     """
     A data model for a Steam user. Holds user persona state, and related actions
 
@@ -24,7 +24,7 @@ class SteamUser(object):
         self.steam_id = SteamID(steam_id)
 
     def __repr__(self):
-        return "<%s(%s, %s, %s)>" % (
+        return "<{}({}, {}, {})>".format(
             self.__class__.__name__,
             str(self.steam_id),
             self.relationship,

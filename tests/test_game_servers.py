@@ -1,4 +1,4 @@
-import mock
+from unittest import mock
 import socket
 import unittest
 
@@ -18,7 +18,7 @@ class TestA2SRules(unittest.TestCase):
 
         self.assertEqual(
             {
-                "text": u"b\ufffdr",
+                "text": "b\ufffdr",
                 "int": 42,
                 "float": 21.12
             },

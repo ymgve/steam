@@ -1,5 +1,5 @@
 import unittest
-import mock
+from unittest import mock
 
 from steam import guard as g
 

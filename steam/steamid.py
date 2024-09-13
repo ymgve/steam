@@ -56,7 +56,7 @@ class SteamID(int):
 
     def __new__(cls, *args, **kwargs):
         steam64 = make_steam64(*args, **kwargs)
-        return super(SteamID, cls).__new__(cls, steam64)
+        return super().__new__(cls, steam64)
 
     def __init__(self, *args, **kwargs):
         pass
@@ -65,7 +65,7 @@ class SteamID(int):
         return str(int(self))
 
     def __repr__(self):
-        return "%s(id=%s, type=%s, universe=%s, instance=%s)" % (
+        return "{}(id={}, type={}, universe={}, instance={})".format(
             self.__class__.__name__,
             self.id,
             repr(self.type.name),
@@ -496,7 +496,7 @@ def from_csgo_friend_code(code, universe=EUniverse.Public):
     :return: SteamID instance
     :rtype: :class:`.SteamID` or :class:`None`
     """
-    if not re.match(r'^['+_csgofrcode_chars+'\-]{10}$', code):
+    if not re.match(r'^['+_csgofrcode_chars+r'\-]{10}$', code):
         return None
 
     code = ('AAAA-' + code).replace('-', '')
@@ -570,7 +570,7 @@ def steam64_from_url(url, http_timeout=30):
         # group profiles
         else:
             text = web.get(match.group('clean_url'), timeout=http_timeout).text
-            data_match = re.search("OpenGroupChat\( *'(?P<steamid>\d+)'", text)
+            data_match = re.search(r"OpenGroupChat\( *'(?P<steamid>\d+)'", text)
 
             if data_match:
                 return int(data_match.group('steamid'))

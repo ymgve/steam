@@ -1,4 +1,3 @@
-
 from steam.enums import EResult
 
 class SteamError(Exception):
@@ -9,7 +8,7 @@ class SteamError(Exception):
         self.eresult = EResult(eresult)  #: :class:`.EResult`
 
     def __str__(self):
-        return "(%s) %s" % (self.eresult, self.message)
+        return "({}) {}".format(self.eresult, self.message)
 
 class ManifestError(SteamError):
     """
@@ -29,7 +28,7 @@ class ManifestError(SteamError):
             self.eresult = EResult.Fail
 
     def __repr__(self):
-        return "%s(%s, app=%s, depot=%s, manifest=%s, error=%s)" % (
+        return "{}({}, app={}, depot={}, manifest={}, error={})".format(
             self.__class__.__name__,
             repr(self.message),
             self.app_id,
@@ -39,7 +38,7 @@ class ManifestError(SteamError):
         )
 
     def __str__(self):
-        return "(%s) %s (app=%s depot=%s manifest=%s)" % (
+        return "({}) {} (app={} depot={} manifest={})".format(
             self.eresult,
             self.message,
             self.app_id,

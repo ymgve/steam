@@ -7,9 +7,9 @@ from steam.core.msg import MsgProto
 from steam.client.user import SteamUser
 
 
-class Friends(object):
+class Friends:
     def __init__(self, *args, **kwargs):
-        super(Friends, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         #: :class:`.SteamFriendlist` instance
         self.friends = SteamFriendlist(self, logger_name="%s.friends" % self.__class__.__name__)

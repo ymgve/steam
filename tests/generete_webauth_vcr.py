@@ -1,4 +1,3 @@
-from __future__ import print_function
 import re
 import os
 import sys
@@ -10,7 +9,7 @@ sys.path.insert(0, rootdir)
 
 from getpass import getpass
 import json
-import mock
+from unittest import mock
 import vcr
 import requests
 

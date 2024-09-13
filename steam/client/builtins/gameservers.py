@@ -43,14 +43,14 @@ from steam.utils.proto import proto_to_dict
 from steam.exceptions import SteamError
 
 
-class GameServers(object):
+class GameServers:
     def __init__(self, *args, **kwargs):
-        super(GameServers, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.gameservers = SteamGameServers(self)  #: instance of :class:`SteamGameServers`
 
 
-class SteamGameServers(object):
+class SteamGameServers:
     def __init__(self, steam):
         self._s = steam
 

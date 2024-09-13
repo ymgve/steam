@@ -10,7 +10,7 @@ from gevent.select import select as gselect
 logger = logging.getLogger("Connection")
 
 
-class Connection(object):
+class Connection:
     MAGIC = b'VT01'
     FMT = '<I4s'
     FMT_SIZE = struct.calcsize(FMT)
@@ -39,7 +39,7 @@ class Connection(object):
 
         try:
             self._connect(server_addr)
-        except socket.error:
+        except OSError:
             return False
 
         self.server_addr = server_addr
@@ -142,7 +142,7 @@ class TCPConnection(Connection):
     def _read_data(self):
         try:
             return self.socket.recv(16384)
-        except socket.error:
+        except OSError:
             return ''
 
     def _write_data(self, data):

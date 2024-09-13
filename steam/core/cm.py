@@ -96,7 +96,7 @@ class CMClient(EventEmitter):
     def emit(self, event, *args):
         if event is not None:
             self._LOG.debug("Emit event: %s" % repr(event))
-        super(CMClient, self).emit(event, *args)
+        super().emit(event, *args)
 
     def connect(self, retry=0, delay=0):
         """Initiate connection to CM. Blocks until connected unless ``retry`` is specified.
@@ -204,7 +204,7 @@ class CMClient(EventEmitter):
             message.sessionID = self.session_id
 
         if self.verbose_debug:
-            self._LOG.debug("Outgoing: %s\n%s" % (repr(message), str(message)))
+            self._LOG.debug("Outgoing: {}\n{}".format(repr(message), str(message)))
         else:
             self._LOG.debug("Outgoing: %s", repr(message))
 
@@ -277,7 +277,7 @@ class CMClient(EventEmitter):
             msg.parse()
 
         if self.verbose_debug:
-            self._LOG.debug("Incoming: %s\n%s" % (repr(msg), str(msg)))
+            self._LOG.debug("Incoming: {}\n{}".format(repr(msg), str(msg)))
         else:
             self._LOG.debug("Incoming: %s", repr(msg))
 
@@ -406,7 +406,7 @@ class CMClient(EventEmitter):
         gevent.idle()
 
 
-class CMServerList(object):
+class CMServerList:
     """
     Managing object for CM servers
 

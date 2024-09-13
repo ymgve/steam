@@ -6,7 +6,7 @@
 ######################################################
 import vcr
 import unittest
-import mock
+from unittest import mock
 import requests
 
 from steam import webauth as wa

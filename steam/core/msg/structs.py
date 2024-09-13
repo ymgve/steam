@@ -24,7 +24,7 @@ class StructMessageMeta(type):
 
         return cls
 
-class StructMessage(object, metaclass=StructMessageMeta):
+class StructMessage(metaclass=StructMessageMeta):
     def __init__(self, data=None):
         if data: self.load(data)
 
@@ -115,7 +115,7 @@ class ClientLogOnResponse(StructMessage):
         return "eresult: %s" % repr(self.eresult)
 
 class ClientVACBanStatus(StructMessage):
-    class VACBanRange(object):
+    class VACBanRange:
         start = 0
         end = 0
 
@@ -241,7 +241,7 @@ class ClientChatMemberInfo(StructMessage):
                           ])
 
 class ClientMarketingMessageUpdate2(StructMessage):
-    class MarketingMessage(object):
+    class MarketingMessage:
         id = 0
         url = ''
         flags = 0

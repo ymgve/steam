@@ -9,9 +9,9 @@ from steam.utils import _range, chunks
 from steam.utils.throttle import ConstantRateLimit
 
 
-class Leaderboards(object):
+class Leaderboards:
     def __init__(self, *args, **kwargs):
-        super(Leaderboards, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def get_leaderboard(self, app_id, name):
         """.. versionadded:: 0.8.2
@@ -42,7 +42,7 @@ class Leaderboards(object):
         return SteamLeaderboard(self, app_id, name, resp)
 
 
-class SteamLeaderboard(object):
+class SteamLeaderboard:
     """.. versionadded:: 0.8.2
 
     Steam leaderboard object.
@@ -181,8 +181,7 @@ class SteamLeaderboard(object):
                 for entries in chunks(self, chunk_size):
                     if not entries:
                         return
-                    for entry in entries:
-                        yield entry
+                    yield from entries
                     r.wait()
         return entry_generator()
 

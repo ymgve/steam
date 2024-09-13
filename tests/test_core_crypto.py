@@ -1,5 +1,5 @@
 import unittest
-import mock
+from unittest import mock
 from binascii import hexlify
 
 from steam.core import crypto

@@ -78,7 +78,7 @@ from steam.webauth import MobileWebAuth
 from steam.utils.proto import proto_to_dict
 
 
-class SteamAuthenticator(object):
+class SteamAuthenticator:
     """Add/Remove authenticator from an account. Generate 2FA and confirmation codes."""
     _finalize_attempts = 5
     backend = None               #: instance of :class:`.MobileWebAuth` or :class:`.SteamClient`
@@ -165,7 +165,7 @@ class SteamAuthenticator(object):
             if resp is None:
                 raise SteamAuthenticatorError("Failed. Request timeout")
             if resp.header.eresult != EResult.OK:
-                raise SteamAuthenticatorError("Failed: %s (%s)" % (resp.header.error_message,
+                raise SteamAuthenticatorError("Failed: {} ({})".format(resp.header.error_message,
                                                                    repr(resp.header.eresult)))
 
             resp = proto_to_dict(resp.body)
@@ -250,7 +250,7 @@ class SteamAuthenticator(object):
         })
 
         if not resp['success']:
-            raise SteamAuthenticatorError("Failed to remove authenticator. (attempts remaining: %s)" % (
+            raise SteamAuthenticatorError("Failed to remove authenticator. (attempts remaining: {})".format(
                 resp['revocation_attempts_remaining'],
                 ))
 
@@ -568,7 +568,7 @@ def generate_device_id(steamid):
     :rtype: str
     """
     h = hexlify(sha1_hash(str(steamid).encode('ascii'))).decode('ascii')
-    return "android:%s-%s-%s-%s-%s" % (h[:8], h[8:12], h[12:16], h[16:20], h[20:32])
+    return "android:{}-{}-{}-{}-{}".format(h[:8], h[8:12], h[12:16], h[16:20], h[20:32])
 
 def extract_secrets_from_android_rooted(adb_path='adb'):
     """Extract Steam Authenticator secrets from a rooted Android device

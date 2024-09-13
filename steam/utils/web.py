@@ -10,7 +10,7 @@ def make_requests_session():
     session = requests.Session()
 
     version = __import__('steam').__version__
-    ua = "python-steam/{0} {1}".format(version,
+    ua = "python-steam/{} {}".format(version,
                                 session.headers['User-Agent'])
     session.headers['User-Agent'] = ua
 

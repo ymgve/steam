@@ -61,7 +61,7 @@ def chunks(arr, size):
         yield arr[i:i+size]
 
 
-class WeakRefKeyDict(object):
+class WeakRefKeyDict:
     """Pretends to be a dictionary.
     Use any object (even unhashable) as key and store a value.
     Once the object is garbage collected, the entry is destroyed automatically.
@@ -87,7 +87,7 @@ class WeakRefKeyDict(object):
     def __len__(self):
         return len(self.refs)
 
-class WeakRefCallback(object):
+class WeakRefCallback:
     def __init__(self, refs, key):
         self.__dict__.update(locals())
     def __call__(self, wr):

@@ -8,10 +8,10 @@ class GlobalID(int):
     """
     def __new__(cls, *args, **kwargs):
         if len(args) == 1:
-            return super(GlobalID, cls).__new__(cls, *args)
+            return super().__new__(cls, *args)
 
         gid = GlobalID.new(*args, **kwargs)
-        return super(GlobalID, cls).__new__(cls, gid)
+        return super().__new__(cls, gid)
 
     @staticmethod
     def new(sequence_count, start_time, process_id, box_id):
@@ -38,7 +38,7 @@ class GlobalID(int):
         pass
 
     def __repr__(self):
-        return "%s(sequence_count=%s, start_time=%s, process_id=%s, box_id=%s)" % (
+        return "{}(sequence_count={}, start_time={}, process_id={}, box_id={})".format(
             self.__class__.__name__,
             self.sequence_count,
             repr(str(self.start_time)),

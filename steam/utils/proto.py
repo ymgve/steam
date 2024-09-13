@@ -81,7 +81,7 @@ def proto_fill_from_dict(message, data, clear=True):
         if desc.type == desc.TYPE_MESSAGE:
             if desc.label == desc.LABEL_REPEATED:
                 if not isinstance(val, _list_types):
-                    raise TypeError("Expected %s to be of type list, got %s" % (repr(key), type(val)))
+                    raise TypeError("Expected {} to be of type list, got {}".format(repr(key), type(val)))
 
                 list_ref = getattr(message, key)
 
@@ -93,7 +93,7 @@ def proto_fill_from_dict(message, data, clear=True):
                     proto_fill_from_dict(item_message, item)
             else:
                 if not isinstance(val, dict):
-                    raise TypeError("Expected %s to be of type dict, got %s" % (repr(key), type(dict)))
+                    raise TypeError("Expected {} to be of type dict, got {}".format(repr(key), type(dict)))
 
                 proto_fill_from_dict(getattr(message, key), val)
         else:

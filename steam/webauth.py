@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 This module simplifies the process of obtaining an authenticated session for steam websites.
 After authentication is completed, a :class:`requests.Session` is created containing the auth cookies.
@@ -77,7 +76,7 @@ API_URL = 'https://api.steampowered.com/{}Service/{}/v{}'
 SUPPORTED_AUTH_TYPES = [EAuthSessionGuardType.EmailCode, EAuthSessionGuardType.DeviceCode, EAuthSessionGuardType.DeviceConfirmation]
 
 
-class WebAuth(object):
+class WebAuth:
     """New WEB Auth class.
 
     This class works with Steam API:

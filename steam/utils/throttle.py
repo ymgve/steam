@@ -2,7 +2,7 @@ import sys
 import time
 
 
-class ConstantRateLimit(object):
+class ConstantRateLimit:
     def __init__(self, times, seconds, exit_wait=False, sleep_func=time.sleep):
         """Context manager for enforcing constant rate on code inside the block .
 

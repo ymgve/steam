@@ -1,4 +1,3 @@
-
 from base64 import b64decode
 from io import BytesIO
 from zipfile import ZipFile, ZIP_DEFLATED, BadZipFile
@@ -15,7 +14,7 @@ from steam.protobufs.content_manifest_pb2 import (ContentManifestMetadata,
                                                   ContentManifestSignature)
 
 
-class DepotFile(object):
+class DepotFile:
     def __init__(self, manifest, file_mapping):
         """Depot file
 
@@ -33,7 +32,7 @@ class DepotFile(object):
         self.file_mapping = file_mapping
 
     def __repr__(self):
-        return "<%s(%s, %s, %s, %s)>" % (
+        return "<{}({}, {}, {}, {})>".format(
             self.__class__.__name__,
             self.manifest.depot_id,
             self.manifest.gid,
@@ -134,7 +133,7 @@ class DepotFile(object):
         return self.flags & EDepotFileFlag.Executable > 0
 
 
-class DepotManifest(object):
+class DepotManifest:
     DepotFileClass = DepotFile
     PROTOBUF_PAYLOAD_MAGIC = 0x71F617D0
     PROTOBUF_METADATA_MAGIC = 0x1F4812BE
@@ -166,7 +165,7 @@ class DepotManifest(object):
         if self.metadata.filenames_encrypted:
             params += ', filenames_encrypted=True'
 
-        return "<%s(%s)>" % (
+        return "<{}({})>".format(
             self.__class__.__name__,
             params,
             )

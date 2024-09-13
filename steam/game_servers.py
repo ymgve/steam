@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 r""" Master Server Query Protocol
 
 This module implements the legacy Steam master server protocol.
@@ -143,7 +142,7 @@ def _u(data):
 
 class StructReader(_StructReader):
     def read_cstring(self, binary=False):
-        raw = super(StructReader, self).read_cstring()
+        raw = super().read_cstring()
         if binary:
             return raw
         return _u(raw)
@@ -230,7 +229,7 @@ def query_master(filter_text=r'\nappid\500', max_servers=20, region=MSRegion.Wor
                 ms.close()
                 return
 
-        next_ip = '{}:{}'.format(ip, port).encode('utf-8')
+        next_ip = f'{ip}:{port}'.encode('utf-8')
 
     ms.close()
 

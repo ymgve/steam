@@ -17,7 +17,6 @@ import os
 import json
 from random import random
 from time import time
-from io import open
 from getpass import getpass
 import logging
 
@@ -57,7 +56,7 @@ class SteamClient(CMClient, BuiltinBase):
         BuiltinBase.__init__(self)
 
     def __repr__(self):
-        return "<%s(%s) %s>" % (self.__class__.__name__,
+        return "<{}({}) {}>".format(self.__class__.__name__,
                               repr(self.current_server_addr),
                               'online' if self.connected else 'offline',
                               )

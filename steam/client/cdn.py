@@ -146,7 +146,7 @@ def get_content_servers_from_cs(cell_id, host='cs.steamcontent.com', port=80, nu
     """
     proto = 'https' if port == 443 else 'http'
 
-    url = '%s://%s:%s/serverlist/%s/%s/' % (proto, host, port, cell_id, num_servers)
+    url = '{}://{}:{}/serverlist/{}/{}/'.format(proto, host, port, cell_id, num_servers)
     session = make_requests_session() if session is None else session
     resp = session.get(url)
 
@@ -205,7 +205,7 @@ def get_content_servers_from_webapi(cell_id, num_servers=20):
     return servers
 
 
-class ContentServer(object):
+class ContentServer:
     https = False
     host = None
     vhost = None
@@ -216,7 +216,7 @@ class ContentServer(object):
     weighted_load = None
 
     def __repr__(self):
-        return "<%s('%s://%s:%s', type=%s, cell_id=%s)>" % (
+        return "<{}('{}://{}:{}', type={}, cell_id={})>".format(
             self.__class__.__name__,
             'https' if self.https else 'http',
             self.host,
@@ -247,7 +247,7 @@ class CDNDepotFile(DepotFile):
         self._lcbuff = b''
 
     def __repr__(self):
-        return "<%s(%s, %s, %s, %s, %s)>" % (
+        return "<{}({}, {}, {}, {}, {})>".format(
             self.__class__.__name__,
             self.manifest.app_id,
             self.manifest.depot_id,
@@ -280,7 +280,7 @@ class CDNDepotFile(DepotFile):
 
         if whence == 0:
             if offset < 0:
-                raise IOError("Invalid argument")
+                raise OSError("Invalid argument")
         elif whence == 1:
             offset = self.offset + offset
         elif whence == 2:
@@ -428,7 +428,7 @@ class CDNDepotManifest(DepotManifest):
         if self.filenames_encrypted:
             params += ', filenames_encrypted=True'
 
-        return "<%s(%s)>" % (
+        return "<{}({})>".format(
             self.__class__.__name__,
             params,
             )
@@ -442,7 +442,7 @@ class CDNDepotManifest(DepotManifest):
             mapping.chunks.sort(key=lambda x: x.offset, reverse=False)
 
 
-class CDNClient(object):
+class CDNClient:
     DepotManifestClass = CDNDepotManifest
     _LOG = logging.getLogger("CDNClient")
     servers = deque()  #: CS Server list
@@ -562,7 +562,7 @@ class CDNClient(object):
         server = self.get_content_server()
 
         while True:
-            url = "%s://%s:%s/%s/%s" % (
+            url = "{}://{}:{}/{}/{}".format(
                 'https' if server.https else 'http',
                 server.host,
                 server.port,
@@ -598,7 +598,7 @@ class CDNClient(object):
         :raises SteamError: error message
         """
         if (depot_id, chunk_id) not in self._chunk_cache:
-            resp = self.cdn_cmd('depot', '%s/chunk/%s' % (depot_id, chunk_id))
+            resp = self.cdn_cmd('depot', '{}/chunk/{}'.format(depot_id, chunk_id))
 
             data = symmetric_decrypt(resp.content, self.get_depot_key(app_id, depot_id))
 
@@ -661,7 +661,7 @@ class CDNClient(object):
         )
 
         if resp is None or resp.header.eresult != EResult.OK:
-                raise SteamError("Failed to get manifest code for %s, %s, %s" % (app_id, depot_id, manifest_gid),
+                raise SteamError("Failed to get manifest code for {}, {}, {}".format(app_id, depot_id, manifest_gid),
                                  EResult.Timeout if resp is None else EResult(resp.header.eresult))
 
         return resp.body.manifest_request_code
@@ -684,9 +684,9 @@ class CDNClient(object):
         """
         if (app_id, depot_id, manifest_gid) not in self.manifests:
             if manifest_request_code:
-                resp = self.cdn_cmd('depot', '%s/manifest/%s/5/%s' % (depot_id, manifest_gid, manifest_request_code))
+                resp = self.cdn_cmd('depot', '{}/manifest/{}/5/{}'.format(depot_id, manifest_gid, manifest_request_code))
             else:
-                resp = self.cdn_cmd('depot', '%s/manifest/%s/5' % (depot_id, manifest_gid))
+                resp = self.cdn_cmd('depot', '{}/manifest/{}/5'.format(depot_id, manifest_gid))
 
             if resp.ok:
                 manifest = self.DepotManifestClass(self, app_id, resp.content)
@@ -757,7 +757,7 @@ class CDNClient(object):
         is_enc_branch = False
 
         if branch not in depots.get('branches', {}):
-            raise SteamError("No branch named %s for app_id %s" % (repr(branch), app_id))
+            raise SteamError("No branch named {} for app_id {}".format(repr(branch), app_id))
         elif int(depots['branches'][branch].get('pwdrequired', 0)) > 0:
             is_enc_branch = True
 
@@ -889,8 +889,7 @@ class CDNClient(object):
         :rtype: [:class:`.CDNDepotFile`]
         """
         for manifest in self.get_manifests(app_id, branch, password, filter_func):
-            for fp in manifest.iter_files(filename_filter):
-                yield fp
+            yield from manifest.iter_files(filename_filter)
 
     def get_manifest_for_workshop_item(self, item_id):
         """Get the manifest file for a worshop item that is hosted on SteamPipe

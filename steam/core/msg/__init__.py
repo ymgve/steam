@@ -80,7 +80,7 @@ def get_cmsg(emsg):
 
     return cmsg_lookup.get(cmsg_name, None)
 
-class Msg(object):
+class Msg:
     proto = False
     body = None     #: message instance
     payload = None  #: Will contain body payload, if we fail to find correct message class
@@ -150,7 +150,7 @@ class Msg(object):
         else:
             suffix = 'n/a'
 
-        return "<Msg(%r | %s)>" % (self.msg, suffix)
+        return "<Msg({!r} | {})>".format(self.msg, suffix)
 
     def __str__(self):
         rows = [repr(self)]
@@ -170,7 +170,7 @@ class Msg(object):
         return '\n'.join(rows)
 
 
-class MsgProto(object):
+class MsgProto:
     proto = True
     body = None     #: protobuf message instance
     payload = None  #: Will contain body payload, if we fail to find correct proto message
@@ -238,7 +238,7 @@ class MsgProto(object):
         else:
             suffix = 'n/a'
 
-        return "<MsgProto(%r | %s)>" % (self.msg, suffix)
+        return "<MsgProto({!r} | {})>".format(self.msg, suffix)
 
     def __str__(self):
         rows = [repr(self)]
