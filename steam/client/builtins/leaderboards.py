@@ -5,7 +5,7 @@ import logging
 from steam.core.msg import MsgProto
 from steam.enums import EResult, ELeaderboardDataRequest, ELeaderboardSortMethod, ELeaderboardDisplayType
 from steam.enums.emsg import EMsg
-from steam.utils import _range, chunks
+from steam.utils import chunks
 from steam.utils.throttle import ConstantRateLimit
 
 
@@ -158,7 +158,7 @@ class SteamLeaderboard:
         entries = self.get_entries(start+1, stop)
 
         if isinstance(x, slice):
-            return [entries[i] for i in _range(0, len(entries), step)]
+            return [entries[i] for i in range(0, len(entries), step)]
         else:
             return entries[0]
 
