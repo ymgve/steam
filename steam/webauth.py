@@ -62,7 +62,7 @@ import requests
 from steam.enums.common import EResult
 from steam.enums.proto import EAuthSessionGuardType, EAuthTokenPlatformType, ESessionPersistence
 from steam.steamid import SteamID
-from steam.utils.web import generate_session_id
+from steam.utils.web import make_requests_session, generate_session_id
 from steam.core.crypto import rsa_publickey, pkcs1v15_encrypt
 
 
@@ -127,19 +127,11 @@ class WebAuth:
 
     """
 
-    # Pretend to be chrome on windows, made this act as most like a
-    # browser as possible to (hopefully) avoid breakage in the future from valve
-    def __init__(self, username='', password='',
-                 userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
-                           ' AppleWebKit/537.36 (KHTML, like Gecko)'
-                           ' Chrome/118.0.0.0 Safari/537.36'):
-
-        # ALL FUNCTIONS RENAMED TO PEP8 NOTATION.
-        self.session = requests.session()
-        self.user_agent = userAgent
+    def __init__(self, username='', password=''):
+        self.session = make_requests_session()
+        self.user_agent = self.session.headers['User-Agent']
         self.username = username
         self.password = password
-        self.session.headers['User-Agent'] = self.user_agent
         self.steam_id = None
         self.client_id = None
         self.request_id = None

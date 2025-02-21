@@ -1,81 +1,90 @@
 interactions:
 - request:
-    body: !!python/unicode ''
+    body: ''
     headers:
-      Accept:
-      - '*/*'
       Accept-Encoding:
       - identity
       Connection:
       - keep-alive
-      Content-Length:
-      - '46'
-      Content-Type:
-      - application/x-www-form-urlencoded
       User-Agent:
-      - python-steam/1.0.0-alpha6 python-requests/2.21.0
-    method: POST
-    uri: https://steamcommunity.com/login/getrsakey/
+      - python-requests/2.32.3
+      accept:
+      - application/json, text/plain, */*
+      origin:
+      - https://steamcommunity.com
+      referer:
+      - https://steamcommunity.com/
+    method: GET
+    uri: https://api.steampowered.com/IAuthenticationService/GetPasswordRSAPublicKey/v1?account_name=testuser
   response:
     body:
-      string: !!python/unicode '{"timestamp": 12345678, "token_gid": 0, "publickey_mod":
-        "ddb3f29bd33f38db5947d85dc2e46bf033916d9caa95948a9af1146bf246915b93e66124e025f21588c05549614fe4c1ffa2ec92ea76bf1c580422bc1fc85700cce8dd14ec232e47a03581dc670ecb3a125bc597569384e3ec2707674458c666c563b7a0972deddd855b23884ca76032c2c5a99af6e8debe47aace8d0bdb8fc42bb9758ce8db0765649f78cd4fa4b3d123ed7cbce0c05b57dbb1a8cbb82923c7c9ca8fecab923db2f3a85a05d8c8bf5a1aeed479d3f533b009cce7d9f9ca196397206bdda46fb850a4c4ea7eb3383e419121fac575629e893959175aedc936cb71527958eb308bd555cf0386939b5a3c097fa6156aeef5eb805168b7bdb511fd",
-        "publickey_exp": "010001", "success": true}'
+      string: '{"response": {"publickey_mod": "f88ee5a688f7f81c7ec8ebf800998eb2a63abf41569f5d6f4db19867b2e1d71182ace4f6157c05b434f2630b29e9bfad15be647e22841b823575f22814a2a62211496fcb1cc158f41a2c591a6913d03d8b9298db991a46d949f282bba419f61a3069e49a7b06f4d97f539fa89d2293f585505500be73b974c262350f6f5fb5f0de8f453757b62bedae93f8fd35ac222918d4682a17c435193172690bcdbebab9f9b39b14b6edd17cddb558ea28b1cf84876cb6260bc2d79ca25952461626effb701c2ca8029e4363f693d93cd0e95f988bc5b492f8273fdd5bea1ffbf63e89b2b41b7b17e5a4d7b17793154dd41c7f2c449d2bf49a5bba9a6a06f095adf58fc5",
+        "publickey_exp": "010001", "timestamp": "12345678"}}'
     headers:
-      cache-control:
-      - no-cache
-      connection:
+      Access-Control-Allow-Origin:
+      - https://steamcommunity.com
+      Access-Control-Expose-Headers:
+      - X-eresult, X-error_message
+      Connection:
       - keep-alive
-      content-length:
-      - '616'
-      content-type:
-      - application/json; charset=utf-8
-      server:
+      Content-Length:
+      - '597'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Server:
       - nginx
-      vary:
-      - Accept-Encoding
-      x-frame-options:
-      - DENY
+      Vary:
+      - Origin
+      X-eresult:
+      - '1'
+      content-length:
+      - '599'
     status:
       code: 200
       message: OK
 - request:
-    body: !!python/unicode ''
+    body: ''
     headers:
-      Accept:
-      - '*/*'
       Accept-Encoding:
       - identity
       Connection:
       - keep-alive
       Content-Length:
-      - '570'
+      - '554'
       Content-Type:
       - application/x-www-form-urlencoded
       User-Agent:
-      - python-steam/1.0.0-alpha6 python-requests/2.21.0
+      - python-requests/2.32.3
+      accept:
+      - application/json, text/plain, */*
+      origin:
+      - https://steamcommunity.com
+      referer:
+      - https://steamcommunity.com/
     method: POST
-    uri: https://steamcommunity.com/login/dologin/
+    uri: https://api.steampowered.com/IAuthenticationService/BeginAuthSessionViaCredentials/v1
   response:
     body:
-      string: !!python/unicode '{"captcha_gid": -1, "success": false, "requires_twofactor":
-        false, "captcha_needed": false, "clear_password_field": true, "message": "The
-        account name or password that you have entered is incorrect."}'
+      string: '{"response": {"interval": 5, "extended_error_message": ""}}'
     headers:
-      cache-control:
-      - no-cache
-      connection:
+      Access-Control-Allow-Origin:
+      - https://steamcommunity.com
+      Access-Control-Expose-Headers:
+      - X-eresult, X-error_message
+      Connection:
       - keep-alive
-      content-length:
-      - '200'
-      content-type:
-      - application/json; charset=utf-8
-      server:
+      Content-Length:
+      - '55'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Server:
       - nginx
-      vary:
-      - Accept-Encoding
-      x-frame-options:
-      - DENY
+      Vary:
+      - Origin
+      X-eresult:
+      - '5'
+      content-length:
+      - '59'
     status:
       code: 200
       message: OK
