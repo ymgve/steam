@@ -15,10 +15,10 @@ interactions:
       referer:
       - https://steamcommunity.com/
     method: GET
-    uri: https://api.steampowered.com/IAuthenticationService/GetPasswordRSAPublicKey/v1?account_name=abcabcabcabcabc
+    uri: https://api.steampowered.com/IAuthenticationService/GetPasswordRSAPublicKey/v1?account_name=testuser
   response:
     body:
-      string: '{"response": {"publickey_mod": "c5d039f5ef1d265e447a4fd053f1c85281f6ef89efae491667625297792c9b25753aa3e02bcd4ce33ff602637987e54ef1a7f2f5fbcac1506074cf99a31108b16059a35101a95cef8859984f8215e1b92047fc394f1a93e45ac29d18757246771e1eb0a6deb542f351b7731b3ecf2ccfa0763885d4a8ff85371b521d5caf24404a40fae0c6a2ced77ae75359601e51eafe5083bf29f13935431dcdcf11eb7e4844eae37707a5aa96e6c2581e7a3c8f3a323f43b0a25bf117f30b643cf5f373ead99da9924b96ed5a7ccbbe918ded5190906bb4319025ed7c5d8c211c91b1910d743c5b20d44d7cbb9eedf915377b2345427bbb8cdd21fdc4dcc861f2b4639857",
+      string: '{"response": {"publickey_mod": "f88ee5a688f7f81c7ec8ebf800998eb2a63abf41569f5d6f4db19867b2e1d71182ace4f6157c05b434f2630b29e9bfad15be647e22841b823575f22814a2a62211496fcb1cc158f41a2c591a6913d03d8b9298db991a46d949f282bba419f61a3069e49a7b06f4d97f539fa89d2293f585505500be73b974c262350f6f5fb5f0de8f453757b62bedae93f8fd35ac222918d4682a17c435193172690bcdbebab9f9b39b14b6edd17cddb558ea28b1cf84876cb6260bc2d79ca25952461626effb701c2ca8029e4363f693d93cd0e95f988bc5b492f8273fdd5bea1ffbf63e89b2b41b7b17e5a4d7b17793154dd41c7f2c449d2bf49a5bba9a6a06f095adf58fc5",
         "publickey_exp": "010001", "timestamp": "12345678"}}'
     headers:
       Access-Control-Allow-Origin:
@@ -50,7 +50,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '556'
+      - '562'
       Content-Type:
       - application/x-www-form-urlencoded
       User-Agent:
@@ -114,7 +114,7 @@ interactions:
   response:
     body:
       string: '{"response": {"refresh_token": "BBBBBBBBBBBBBBBB", "access_token":
-        "AAAAAAAAAAAAAAAA", "had_remote_interaction": false, "account_name": "abcabcabcabcabc"}}'
+        "AAAAAAAAAAAAAAAA", "had_remote_interaction": false, "account_name": "testuser"}}'
     headers:
       Access-Control-Allow-Origin:
       - https://steamcommunity.com
@@ -125,7 +125,7 @@ interactions:
       Content-Encoding:
       - gzip
       Content-Length:
-      - '699'
+      - '694'
       Content-Type:
       - application/json; charset=UTF-8
       Server:
@@ -136,7 +136,7 @@ interactions:
       X-eresult:
       - '1'
       content-length:
-      - '155'
+      - '148'
     status:
       code: 200
       message: OK

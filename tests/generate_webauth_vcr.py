@@ -25,7 +25,7 @@ def request_scrubber(r):
     r.headers.pop('Cookie', None)
     r.headers['Accept-Encoding'] = 'identity'
     r.body = ''
-    r.uri = re.sub(r"\?account_name=.+", "?account_name=" + "abc"*5, r.uri)
+    r.uri = re.sub(r"\?account_name=.+", "?account_name=testuser", r.uri)
     return r
 
 def response_scrubber(r):
@@ -53,7 +53,7 @@ def response_scrubber(r):
         if 'access_token' in data['response']:
             data['response']['access_token'] = 'A'*16
             data['response']['refresh_token'] = 'B'*16
-            data['response']['account_name'] = "abc"*5
+            data['response']['account_name'] = "testuser"
 
         body = json.dumps(data)
         r['body']['string'] = body
