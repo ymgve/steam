@@ -44,7 +44,7 @@ test:
 
 webauth_gen:
 	rm -f vcr/webauth*
-	python tests/generete_webauth_vcr.py
+	python3 tests/generete_webauth_vcr.py
 
 pylint:
 	pylint -r n -f colorized steam || true
@@ -59,29 +59,29 @@ clean:
 	rm -rf dist steam.egg-info steam/*.pyc
 
 dist: clean
-	python setup.py sdist
+	python3 setup.py sdist
 
 upload: dist
 	twine upload -r pypi dist/*
 
 pb_fetch:
 	wget -nv --show-progress -N -P ./protobufs/ -i protobuf_list.txt || exit 0
-	for FN in protobufs/{steammessages_{physicalgoods,webui_friends},gc,test_messages}.proto; do \
-		mv "$${FN}" "$${FN}.notouch"; \
-	done;
+	#for FN in protobufs/{steammessages_{physicalgoods,webui_friends},gc,test_messages}.proto; do \
+	#	mv "$${FN}" "$${FN}.notouch"; \
+	#done;
 	for FN in protobufs/*.steamclient.proto; do \
 		mv "$${FN}" "$${FN/.steamclient.proto/.proto}"; \
 	done;
 	sed -i '1s/^/syntax = "proto2"\;\n/' protobufs/*.proto
 	sed -i 's/cc_generic_services/py_generic_services/' protobufs/*.proto
 	sed -i 's/\.steamclient\.proto/.proto/' protobufs/*.proto
-	for FN in protobufs/*.proto.notouch; do \
-		mv "$${FN}" "$${FN%.notouch}"; \
-	done;
+	#for FN in protobufs/*.proto.notouch; do \
+	#	mv "$${FN}" "$${FN%.notouch}"; \
+	#done;
 
 pb_compile:
 	for filepath in ./protobufs/*.proto; do \
-		protoc3 --python_out ./steam/protobufs/ --proto_path=./protobufs "$$filepath"; \
+		protoc --python_out ./steam/protobufs/ --proto_path=./protobufs "$$filepath"; \
 	done;
 	sed -i '/^import sys/! s/^import /import steam.protobufs./' steam/protobufs/*_pb2.py
 
@@ -95,6 +95,6 @@ pb_services:
 	mv steam/core/msg/unified.py.tmp steam/core/msg/unified.py
 
 pb_gen_enums:
-	python generate_enums_from_proto.py > steam/enums/proto.py
+	python3 generate_enums_from_proto.py > steam/enums/proto.py
 
 pb_update: pb_fetch pb_compile pb_services pb_gen_enums
