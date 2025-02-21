@@ -69,6 +69,7 @@ pb_fetch:
 	#for FN in protobufs/{steammessages_{physicalgoods,webui_friends},gc,test_messages}.proto; do \
 	#	mv "$${FN}" "$${FN}.notouch"; \
 	#done;
+	mv ./protobufs/test_messages.proto ./protobufs/test_messages.proto.notouch
 	for FN in protobufs/*.steamclient.proto; do \
 		mv "$${FN}" "$${FN/.steamclient.proto/.proto}"; \
 	done;
@@ -78,6 +79,7 @@ pb_fetch:
 	#for FN in protobufs/*.proto.notouch; do \
 	#	mv "$${FN}" "$${FN%.notouch}"; \
 	#done;
+	mv ./protobufs/test_messages.proto.notouch ./protobufs/test_messages.proto
 
 pb_compile:
 	for filepath in ./protobufs/*.proto; do \
@@ -86,7 +88,9 @@ pb_compile:
 	sed -i '/^import sys/! s/^import /import steam.protobufs./' steam/protobufs/*_pb2.py
 
 pb_clear:
+	mv ./protobufs/test_messages.proto ./protobufs/test_messages.proto.notouch
 	rm -f ./protobufs/*.proto ./steam/protobufs/*_pb2.py
+	mv ./protobufs/test_messages.proto.notouch ./protobufs/test_messages.proto
 
 pb_services:
 	grep -B 99999 MARK_SERVICE_START steam/core/msg/unified.py > steam/core/msg/unified.py.tmp
