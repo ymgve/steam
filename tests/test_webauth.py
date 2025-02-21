@@ -1,9 +1,3 @@
-######################################################
-####
-#### NOT TO BE RAN WITHOUT GENERATING A VCR FIRST
-#### use ....
-####
-######################################################
 import vcr
 import unittest
 from unittest import mock
