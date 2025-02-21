@@ -25,11 +25,12 @@ def request_scrubber(r):
     r.headers.pop('Cookie', None)
     r.headers['Accept-Encoding'] = 'identity'
     r.body = ''
+    r.uri = re.sub(r"\?account_name=.+", "?account_name=" + "abc"*5, r.uri)
     return r
 
 def response_scrubber(r):
-    r['headers'].pop('date', None)
-    r['headers'].pop('expires', None)
+    r['headers'].pop('Date', None)
+    r['headers'].pop('Expires', None)
 
     if 'set-cookie' in r['headers'] and 'steamLogin' in ''.join(r['headers']['set-cookie']):
         r['headers']['set-cookie'] = [
@@ -43,15 +44,16 @@ def response_scrubber(r):
     if r.get('body', ''):
         data = json.loads(r['body']['string'])
 
-        if 'token_gid' in data:
-            data['token_gid'] = 0
-        if 'timestamp' in data:
-            data['timestamp'] = 12345678
-        if 'transfer_parameters' in data:
-            data['transfer_parameters']['steamid'] = '0'
-            data['transfer_parameters']['token'] = 'A'*16
-            data['transfer_parameters']['token_secure'] = 'B'*16
-            data['transfer_parameters']['auth'] = 'Z'*16
+        if 'client_id' in data['response']:
+            data['response']['client_id'] = "12345678"
+            data['response']['request_id'] = 'R'*16
+            data['response']['steamid'] = "0"
+        if 'timestamp' in data['response']:
+            data['response']['timestamp'] = "12345678"
+        if 'access_token' in data['response']:
+            data['response']['access_token'] = 'A'*16
+            data['response']['refresh_token'] = 'B'*16
+            data['response']['account_name'] = "abc"*5
 
         body = json.dumps(data)
         r['body']['string'] = body
@@ -78,7 +80,10 @@ def user_pass_only():
     u = input("Username: ")
     p = getpass("Password (no echo): ")
 
+    print("\nGenerating success cassette...")
     user_pass_only_success(u, p)
+
+    print("\nGenerating fail cassette...")
     user_pass_only_fail(u, p + '123')
 
 @anon_vcr.use_cassette('webauth_user_pass_only_success.yaml')
