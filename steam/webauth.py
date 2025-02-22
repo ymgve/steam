@@ -141,8 +141,7 @@ class WebAuth:
         self.email_auth_waits = False  # Not used yet.
         self.logged_on = False
 
-    @staticmethod
-    def send_api_request(data, steam_api_interface, steam_api_method,
+    def send_api_request(self, data, steam_api_interface, steam_api_method,
                          steam_api_version):
         """Send request to Steam API via requests"""
         steam_url = API_URL.format(steam_api_interface, steam_api_method,
