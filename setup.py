@@ -13,20 +13,20 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 with open(path.join(here, 'steam/__init__.py'), encoding='utf-8') as f:
     __version__ = f.readline().split('"')[1]
 
+# TODO: This should just pull from requirements.txt probably
 install_requires = [
-    'pycryptodomex>=3.7.0',
-    'requests>=2.9.1',
-    'urllib3<2', # See https://github.com/kevin1024/vcrpy/pull/699#issuecomment-1551439663
-    'vdf @ git+https://github.com/solsticegamestudios/vdf.git@v4.0',
-    'cachetools>=3.0.0',
+    'pycryptodomex>=3.21.0',
+    'requests>=2.32.2',
+    'cachetools>=5.5.2',
+    'vdf @ git+https://github.com/solsticegamestudios/vdf.git@v4.0'
 ]
 
 install_extras = {
     'client': [
-        'gevent>=1.3.0',
-        'protobuf~=3.0',
+        'gevent>=22.10',
+        'protobuf~=5.29.3',
         'gevent-eventemitter~=2.1',
-        'wsproto~=1.2.0',
+        'wsproto~=1.2.0'
     ],
 }
 
