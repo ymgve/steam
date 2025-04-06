@@ -9,14 +9,15 @@ from steam.enums import EType, EUniverse
 # setup VCR
 def scrub_req(r):
     r.headers.pop('Cookie', None)
-    r.headers.pop('date', None)
+    r.headers.pop('Date', None)
     return r
 def scrub_resp(r):
-    r['headers'].pop('set-cookie', None)
-    r['headers'].pop('date', None)
-    r['headers'].pop('expires', None)
+    r['headers'].pop('Set-Cookie', None)
+    r['headers'].pop('Date', None)
+    r['headers'].pop('Expires', None)
     return r
 
+# https://steamcommunity.com/dev/apikey
 test_api_key = 'test_api_key'
 
 test_vcr = vcr.VCR(

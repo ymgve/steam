@@ -2,23 +2,23 @@ interactions:
 - request:
     body: ''
     headers:
+      Accept:
+      - application/json, text/plain, */*
       Accept-Encoding:
       - identity
       Connection:
       - keep-alive
-      User-Agent:
-      - python-requests/2.32.3
-      accept:
-      - application/json, text/plain, */*
-      origin:
+      Origin:
       - https://steamcommunity.com
-      referer:
+      Referer:
       - https://steamcommunity.com/
+      User-Agent:
+      - python-steam/2.0.0-alpha python-requests/2.32.3
     method: GET
     uri: https://api.steampowered.com/IAuthenticationService/GetPasswordRSAPublicKey/v1?account_name=testuser
   response:
     body:
-      string: '{"response": {"publickey_mod": "f88ee5a688f7f81c7ec8ebf800998eb2a63abf41569f5d6f4db19867b2e1d71182ace4f6157c05b434f2630b29e9bfad15be647e22841b823575f22814a2a62211496fcb1cc158f41a2c591a6913d03d8b9298db991a46d949f282bba419f61a3069e49a7b06f4d97f539fa89d2293f585505500be73b974c262350f6f5fb5f0de8f453757b62bedae93f8fd35ac222918d4682a17c435193172690bcdbebab9f9b39b14b6edd17cddb558ea28b1cf84876cb6260bc2d79ca25952461626effb701c2ca8029e4363f693d93cd0e95f988bc5b492f8273fdd5bea1ffbf63e89b2b41b7b17e5a4d7b17793154dd41c7f2c449d2bf49a5bba9a6a06f095adf58fc5",
+      string: '{"response": {"publickey_mod": "ba745f1becaccf5150d4b57e8afa82b152b644f6eac15852c529a64b31896b3c0ad3df2e37573d074d57360f2613d44286eeeaa8838006e72a624d9e14e4d36c37286f28dcd2b734b8ca14a76e7a9711621e045fa97387270afaab1a4d639ec201d922fe3dc888cd1bf362782e5c3a9c6350f8ebce1f3e5eeaf02ea9d2fb012b0219d0c602ba9b4763a172b7f48a1c31d1ef28e82c13f2fa0986c0687eb965cdab23062382fc915f35c858900fb2f4eab84470e8486771e7ada7565b5513678d809ef1068f118a451c842f313b1ab14b4949c0a54c2d8d0e32b80ffab7eb0fc655744afa2f27b331806ec495e2c2539e953ead2cec7b5e8e2bf6c5d8f46f69d3",
         "publickey_exp": "010001", "timestamp": "12345678"}}'
     headers:
       Access-Control-Allow-Origin:
@@ -45,22 +45,22 @@ interactions:
 - request:
     body: ''
     headers:
+      Accept:
+      - application/json, text/plain, */*
       Accept-Encoding:
       - identity
       Connection:
       - keep-alive
       Content-Length:
-      - '554'
+      - '598'
       Content-Type:
       - application/x-www-form-urlencoded
-      User-Agent:
-      - python-requests/2.32.3
-      accept:
-      - application/json, text/plain, */*
-      origin:
+      Origin:
       - https://steamcommunity.com
-      referer:
+      Referer:
       - https://steamcommunity.com/
+      User-Agent:
+      - python-steam/2.0.0-alpha python-requests/2.32.3
     method: POST
     uri: https://api.steampowered.com/IAuthenticationService/BeginAuthSessionViaCredentials/v1
   response:

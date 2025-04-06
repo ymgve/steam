@@ -10,12 +10,14 @@ class WACase(unittest.TestCase):
     def test_http_error(self, mrs_mock):
         mm = mrs_mock.return_value = mock.MagicMock()
 
+        mm.get.side_effect = requests.exceptions.ConnectTimeout('test')
         mm.post.side_effect = requests.exceptions.ConnectTimeout('test')
 
         with self.assertRaises(wa.HTTPError):
             wa.WebAuth('a', 'b').login()
 
         mm.post.reset_mock()
+        mm.get.side_effect = requests.exceptions.ReadTimeout('test')
         mm.post.side_effect = requests.exceptions.ReadTimeout('test')
 
         with self.assertRaises(wa.HTTPError):
@@ -27,13 +29,10 @@ class WACase(unittest.TestCase):
         s = user.login()
 
         self.assertTrue(user.logged_on)
+        self.assertEqual(user.access_token, 'A'*16)
+        self.assertEqual(user.refresh_token, 'B'*16)
+
         self.assertIsInstance(s, requests.Session)
-
-        for domain in s.cookies.list_domains():
-            self.assertEqual(s.cookies.get('steamLogin', domain=domain), '0%7C%7C{}'.format('A'*16))
-            self.assertEqual(s.cookies.get('steamLoginSecure', domain=domain), '0%7C%7C{}'.format('B'*16))
-            self.assertEqual(s.cookies.get('steamMachineAuth0', domain=domain), 'C'*16)
-
         self.assertEqual(s, user.login())
 
     @vcr.use_cassette('vcr/webauth_user_pass_only_fail.yaml', mode='none', serializer='yaml')

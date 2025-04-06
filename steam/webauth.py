@@ -67,9 +67,9 @@ from steam.core.crypto import rsa_publickey, pkcs1v15_encrypt
 
 
 API_HEADERS = {
-    'origin': 'https://steamcommunity.com',
-    'referer': 'https://steamcommunity.com/',
-    'accept': 'application/json, text/plain, */*'
+    'Origin': 'https://steamcommunity.com',
+    'Referer': 'https://steamcommunity.com/',
+    'Accept': 'application/json, text/plain, */*'
 }
 
 API_URL = 'https://api.steampowered.com/{}Service/{}/v{}'
@@ -141,21 +141,24 @@ class WebAuth:
         self.email_auth_waits = False  # Not used yet.
         self.logged_on = False
 
-    @staticmethod
-    def send_api_request(data, steam_api_interface, steam_api_method,
+    def send_api_request(self, data, steam_api_interface, steam_api_method,
                          steam_api_version):
         """Send request to Steam API via requests"""
         steam_url = API_URL.format(steam_api_interface, steam_api_method,
                                    steam_api_version)
 
-        if steam_api_method == "GetPasswordRSAPublicKey":  # It's GET method
-            res = requests.get(steam_url, timeout=10, headers=API_HEADERS,
-                               params=data)
-        else:  # Every other API endpoints are POST.
-            res = requests.post(steam_url, timeout=10, headers=API_HEADERS,
-                                data=data)
+        try:
+            if steam_api_method == "GetPasswordRSAPublicKey":  # It's GET method
+                res = self.session.get(steam_url, timeout=10, headers=API_HEADERS,
+                                params=data)
+            else:  # Every other API endpoints are POST.
+                res = self.session.post(steam_url, timeout=10, headers=API_HEADERS,
+                                    data=data)
 
-        res.raise_for_status()
+            res.raise_for_status()
+        except requests.exceptions.RequestException as e:
+            raise HTTPError(str(e))
+
         return res.json()
 
     def _get_rsa_key(self):
@@ -301,18 +304,27 @@ class WebAuth:
             self.password = password
 
         self._startLoginSession()
+
         if code:
             self._update_login_token(code)
+
         if email_required:
             # We do another request, which force steam to send email code
             # (otherwise code just not sent).
 
             url = (f'https://login.steampowered.com/jwt/checkdevice/'
                    f'{self.steam_id}')
-            res = self.session.post(url, data={
-                'clientid': self.client_id,
-                'steamid': self.steam_id
-            }).json()
+
+            try:
+                res = self.session.post(url, data={
+                    'clientid': self.client_id,
+                    'steamid': self.steam_id
+                })
+                res.raise_for_status()
+                res = res.json()
+            except requests.exceptions.RequestException as e:
+                raise HTTPError(str(e))
+
             if res.get('result') == 8:
                 # This usually mean code sent now.
                 def end_login(email_code: str):
@@ -327,6 +339,7 @@ class WebAuth:
                 # Actually this must will never be called, because
                 # Errors can be only like wrong cookies. (Theoretically)
                 raise WebAuthException("Something invalid went. Try again later.")
+
         self._pollLoginStatus()
         self._finalizeLogin()
 
@@ -350,10 +363,14 @@ class WebAuth:
             "action": "deauthorize",
             "sessionid": session_id
         }
-        resp = self.session.post(
-            'https://store.steampowered.com/twofactor/manage_action',
-            data=data
-        )
+
+        try:
+            resp = self.session.post(
+                'https://store.steampowered.com/twofactor/manage_action',
+                data=data
+            )
+        except requests.exceptions.RequestException as e:
+            raise HTTPError(str(e))
 
         return resp.status_code == 200
 

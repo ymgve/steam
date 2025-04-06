@@ -33,6 +33,8 @@ class CMClient_Scenarios(unittest.TestCase):
         self.s_dec_hmac = patcher.start()
         self.s_dec_hmac.side_effect = lambda c, k, mac: c
 
+        # TODO: Tests for WebsocketConnection
+
         # mock out TCPConnection
         patcher = patch('steam.core.cm.TCPConnection', autospec=True)
         self.addCleanup(patcher.stop)
@@ -136,5 +138,3 @@ class CMClient_Scenarios(unittest.TestCase):
         self.conn_in.put(b'\x19\x05\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01\x00\x00\x00')
 
         cm.wait_event('channel_secured', timeout=2, raises=True)
-
-        
